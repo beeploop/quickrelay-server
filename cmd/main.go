@@ -22,7 +22,7 @@ func main() {
 		log.Fatalf("failed to initialize db schema: %s\n", err.Error())
 	}
 
-	server := api.New(config.Load())
+	server := api.New(config.Load(), dbConn)
 
 	go func() {
 		log.Printf("quickrelay-server API listening on port: %s\n", config.Load().PORT)

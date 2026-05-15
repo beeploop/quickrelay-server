@@ -6,19 +6,22 @@ import (
 	"time"
 
 	"github.com/beeploop/quickrelay/internal/config"
+	"github.com/jmoiron/sqlx"
 )
 
 type Server struct {
+	dbConn    *sqlx.DB
 	mux       *http.ServeMux
 	server    *http.Server
 	startTime time.Time
 }
 
-func New(config *config.Config) *Server {
+func New(config *config.Config, db *sqlx.DB) *Server {
 	mux := http.NewServeMux()
 
 	s := &Server{
-		mux: mux,
+		dbConn: db,
+		mux:    mux,
 		server: &http.Server{
 			Addr:    config.PORT,
 			Handler: mux,

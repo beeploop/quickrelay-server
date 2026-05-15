@@ -12,20 +12,20 @@ var (
 )
 
 type SmsJob struct {
-	ID         string     `query:"id"`
-	Recipient  string     `query:"recipient"`
-	Message    string     `query:"message"`
-	Status     SmsStatus  `query:"status"`
-	RetryCount int        `query:"retry_count"`
-	CreatedAt  time.Time  `query:"created_at"`
-	UpdatedAt  time.Time  `query:"updated_at"`
-	SentAt     *time.Time `query:"sent_at"`
-	FailedAt   *time.Time `query:"failed_at"`
-	LastError  *string    `query:"last_error"`
+	ID         string     `db:"id"`
+	Recipient  string     `db:"recipient"`
+	Message    string     `db:"message"`
+	Status     SmsStatus  `db:"status"`
+	RetryCount int        `db:"retry_count"`
+	CreatedAt  time.Time  `db:"created_at"`
+	UpdatedAt  time.Time  `db:"updated_at"`
+	SentAt     *time.Time `db:"sent_at"`
+	FailedAt   *time.Time `db:"failed_at"`
+	LastError  *string    `db:"last_error"`
 }
 
 type NewSmsJob struct {
-	ID        string `query:"id"`
-	Recipient string `query:"recipient"`
-	Message   string `query:"message"`
+	ID        string `db:"id"`
+	Recipient string `db:"recipient"`
+	Message   string `db:"message"`
 }
