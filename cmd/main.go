@@ -7,16 +7,16 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/beeploop/quickrelay/internal/http"
+	"github.com/beeploop/quickrelay/internal/api"
+	"github.com/beeploop/quickrelay/internal/config"
 )
 
 func main() {
-	PORT := ":3000"
-	server := http.NewServer(PORT)
+	server := api.New(config.Load())
 
 	go func() {
-		log.Printf("quickrelay-server API listening on port: %s\n", PORT)
-		if err := server.ListenAndServe(); err != nil {
+		log.Printf("quickrelay-server API listening on port: %s\n", config.Load().PORT)
+		if err := server.Start(); err != nil {
 			log.Fatal(err.Error())
 		}
 	}()
@@ -27,7 +27,7 @@ func main() {
 
 	log.Println("gracefully shutting down quickrelay-server...")
 
-	if err := server.Shutdown(context.Background()); err != nil {
+	if err := server.Stop(context.Background()); err != nil {
 		log.Fatalf("could not gracefully shutdown server: %s\n", err.Error())
 	}
 
