@@ -9,9 +9,15 @@ import (
 
 	"github.com/beeploop/quickrelay/internal/api"
 	"github.com/beeploop/quickrelay/internal/config"
+	"github.com/beeploop/quickrelay/internal/persistence"
 )
 
 func main() {
+	_, err := persistence.OpenConnection()
+	if err != nil {
+		log.Fatalf("failed to open db connection: %s\n", err.Error())
+	}
+
 	server := api.New(config.Load())
 
 	go func() {
