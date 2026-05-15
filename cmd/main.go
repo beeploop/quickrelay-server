@@ -13,9 +13,13 @@ import (
 )
 
 func main() {
-	_, err := persistence.OpenConnection()
+	dbConn, err := persistence.OpenConnection()
 	if err != nil {
 		log.Fatalf("failed to open db connection: %s\n", err.Error())
+	}
+
+	if err := persistence.InitializeSchema(dbConn); err != nil {
+		log.Fatalf("failed to initialize db schema: %s\n", err.Error())
 	}
 
 	server := api.New(config.Load())
